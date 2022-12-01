@@ -26,7 +26,7 @@ app.use(cors());
 dotenv.config();
 
 // use the environment variable PORT, or 4000 as a fallback
-const PORT_NUMBER = process.env.PORT ?? 4000;
+const PORT_NUMBER = process.env.PORT ?? 4001;
 
 // API info page
 app.get("/", (req, res) => {
@@ -34,7 +34,11 @@ app.get("/", (req, res) => {
   res.sendFile(pathToFile);
 });
 
-app.post("/updateQuizCompletes", (req, res) => {
+app.get("/quiz-completions", (req, res) => {
+  res.status(200).json(QuizCompletionTracker);
+});
+
+app.post("/update-quiz-completions", (req, res) => {
   const currentQuizMode = req.body.mode;
 
   if (currentQuizMode) {
@@ -43,6 +47,7 @@ app.post("/updateQuizCompletes", (req, res) => {
   } else {
     res.status(401).send('No body sent!')
   }
+  
 })
 
 // // GET /items
