@@ -9,7 +9,9 @@ import {
   // DbItem,
   // updateDbItemById,
   updateQuizCompletionTracker,
-  QuizCompletionTracker
+  QuizCompletionTracker,
+  updateQuizDataByNC,
+  db
 
 } from "./db";
 import filePath from "./filePath";
@@ -26,7 +28,7 @@ app.use(cors());
 dotenv.config();
 
 // use the environment variable PORT, or 4000 as a fallback
-const PORT_NUMBER = process.env.PORT ?? 4001;
+const PORT_NUMBER = process.env.PORT ?? 4002;
 
 // API info page
 app.get("/", (req, res) => {
@@ -46,6 +48,20 @@ app.post("/update-quiz-completions", (req, res) => {
   res.status(200).json(QuizCompletionTracker)
   } else {
     res.status(401).send('No body sent!')
+  }
+  
+});
+
+app.post<{nc:string}>("/update-quiz-country-data/:nc", (req, res) => {
+  const numericCode = req.params.nc;
+  const quizMode = req.body.mode;
+  const answerType = req.body.answerType;
+
+  if (req.body) {
+    updateQuizDataByNC(numericCode, quizMode, answerType);
+    res.status(200).json(db)
+  } else {
+    res.status(401).send("All NOT good")
   }
   
 })
