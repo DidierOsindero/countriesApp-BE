@@ -52,6 +52,10 @@ app.post("/update-quiz-completions", (req, res) => {
   
 });
 
+app.get("/update-quiz-country-data", (req, res) => {
+  res.json(db)
+})
+
 app.post<{nc:string}>("/update-quiz-country-data/:nc", (req, res) => {
   const numericCode = req.params.nc;
   const quizMode = req.body.mode;
