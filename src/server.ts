@@ -58,8 +58,8 @@ app.post<{nc:string}>("/update-quiz-country-data/:nc", (req, res) => {
   const answerType = req.body.answerType;
 
   if (req.body) {
-    updateQuizDataByNC(numericCode, quizMode, answerType);
-    res.status(200).json(db)
+    const responseMessage = updateQuizDataByNC(numericCode, quizMode, answerType);
+    res.status(200).json({message: responseMessage, countriesQuizData:db})
   } else {
     res.status(401).send("All NOT good")
   }

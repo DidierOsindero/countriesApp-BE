@@ -45,10 +45,11 @@ export const updateQuizDataByNC = (
   numericCode: string,
   quizMode: QuizMode,
   answerType: AnswerType
-) => {
+): string => {
   const potentialIdx: number | "not found" = findIndexOfDbItemByNC(numericCode);
   if (potentialIdx !== "not found") {
     db[potentialIdx][quizMode][answerType]++;
+    return `Updated country with numericCode ${numericCode}`
   } else {
     db.push({
       numericCode: numericCode,
@@ -57,6 +58,7 @@ export const updateQuizDataByNC = (
       population: { correct: 0, incorrect: 0 },
     });
     db[db.length-1][quizMode][answerType]++;
+    return `Created country with numericCode ${numericCode}`
   }
 };
 
